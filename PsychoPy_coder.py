@@ -66,8 +66,7 @@ win.mouseVisible = False
 
 centerx = 0; centery = 0; location = 2
 txtloc_y = centery + 350
- 
-print(win.getActualFrameRate())
+
 slack = 1/hz/2
 frameTolerance = 0.001  # how close to onset before 'same' frame
 
