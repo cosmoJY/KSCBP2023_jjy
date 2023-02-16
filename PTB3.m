@@ -1,30 +1,30 @@
-% [ÀÎÁö¹×»ı¹°2023] ÀÚ±Ø Á¦½Ã ÇÁ·Î±×·¥ÀÇ Ã³¸® Áö¿¬¿¡ µû¸¥ ¼ø°£ Á¦½Ã Á¤È®¼º ºñ±³
-% Copyright 2023. Á¤Áö¿¬. All rights reserved.
-% ¹®ÀÇ: word3276@gmail.com
+% [ì¸ì§€ë°ìƒë¬¼2023] ìê·¹ ì œì‹œ í”„ë¡œê·¸ë¨ì˜ ì²˜ë¦¬ ì§€ì—°ì— ë”°ë¥¸ ìˆœê°„ ì œì‹œ ì •í™•ì„± ë¹„êµ
+% Copyright 2023. ì •ì§€ì—°. All rights reserved.
+% ë¬¸ì˜: word3276@gmail.com
 
 % MATLAB R2022b & Psychtoolbox 3.0.18
-% ÀıÂ÷: ÀÔ·ÂÃ¢¿¡ ÆÄ¶ó¹ÌÅÍ ÀÔ·Â > ½ºÅ©¸°ÀÌ ÄÑÁö¸é ½ºÆäÀÌ½º¹Ù > ÀÚ±Ø Á¦½Ã(±âº» 16.7 ms) > ¹İº¹ È½¼ö°¡ ³¡³ª¸é ÀÚµ¿ Á¾·á
-% ÇÁ·Î±×·¥ ÃøÁ¤ µ¥ÀÌÅÍÆÄÀÏ °æ·Î: [result] Æú´õ
-%            µ¥ÀÌÅÍÆÄÀÏ º¯ÀÎ¸í: 1. ID  2. ½ÃÇà¹øÈ£  3. ÄÚµå: while[1]/°³¹ßÀÚ[2] 4. Áö¿¬¿ä¼Ò: ¾øÀ½[0]/Å°ÀÔ·ÂÁ÷ÈÄ[1]/¹İº¹¹®[2]
-%                          5. ÀÚ±Ø Á¦½Ã½Ã°£(ÀÌ»óideal)  6. ÀÚ±Ø Á¦½Ã½Ã°£(ÇÁ·Î±×·¥)  7. °ËÀºÈ­¸é Á¦½Ã½Ã°£(ÇÁ·Î±×·¥)
+% ì ˆì°¨: ì…ë ¥ì°½ì— íŒŒë¼ë¯¸í„° ì…ë ¥ > ìŠ¤í¬ë¦°ì´ ì¼œì§€ë©´ ìŠ¤í˜ì´ìŠ¤ë°” > ìê·¹ ì œì‹œ(ê¸°ë³¸ 16.7 ms) > ë°˜ë³µ íšŸìˆ˜ê°€ ëë‚˜ë©´ ìë™ ì¢…ë£Œ
+% í”„ë¡œê·¸ë¨ ì¸¡ì • ë°ì´í„°íŒŒì¼ ê²½ë¡œ: [result] í´ë”
+%            ë°ì´í„°íŒŒì¼ ë³€ì¸ëª…: 1. ID  2. ì‹œí–‰ë²ˆí˜¸  3. ì½”ë“œ: while[1]/ê°œë°œì[2] 4. ì§€ì—°ìš”ì†Œ: ì—†ìŒ[0]/í‚¤ì…ë ¥ì§í›„[1]/ë°˜ë³µë¬¸[2]
+%                          5. ìê·¹ ì œì‹œì‹œê°„(ì´ìƒideal)  6. ìê·¹ ì œì‹œì‹œê°„(í”„ë¡œê·¸ë¨)  7. ê²€ì€í™”ë©´ ì œì‹œì‹œê°„(í”„ë¡œê·¸ë¨)
              
-%% ÃÊ±âÈ­
+%% ì´ˆê¸°í™”
 sca; 
 close all;
 clearvars;
 
-%% ÀÚ±Ø ÆÄ¶ó¹ÌÅÍ ¼³Á¤
+%% ìê·¹ íŒŒë¼ë¯¸í„° ì„¤ì •
 rng('shuffle', 'twister');
-screenNumber = 0;       % ¸ğ´ÏÅÍ ½ºÅ©¸° ¹øÈ£
-issynctest = 0;         % PTB3 ½ÌÅ©Å×½ºÆ® ¿©ºÎ [0: ÁøÇà(±ÇÀå), 1: Á¶°ÇºÎ ÁøÇà, 2: ¹ÌÁøÇà]            
-nrepeat = 10;           % ¹İº¹ È½¼ö
+screenNumber = 0;       % ëª¨ë‹ˆí„° ìŠ¤í¬ë¦° ë²ˆí˜¸
+issynctest = 0;         % PTB3 ì‹±í¬í…ŒìŠ¤íŠ¸ ì—¬ë¶€ [0: ì§„í–‰(ê¶Œì¥), 1: ì¡°ê±´ë¶€ ì§„í–‰, 2: ë¯¸ì§„í–‰]            
+nrepeat = 10;           % ë°˜ë³µ íšŸìˆ˜
 
-target_t = 1/60;        % ÀÚ±Ø Á¦½Ã½Ã°£[±âº»°ª: 16.7 ms = 60 Hz ¸ğ´ÏÅÍ ±âÁØ 1ÇÁ·¹ÀÓ]
-mask_t = 3/60;          % °ËÀº È­¸é Á¦½Ã½Ã°£
-blank_t0 = 3/60;        % Å° ÀÔ·Â°ú ÀÚ±Ø Á¦½Ã »çÀÌ ½Ã°£ °£°İ
+target_t = 1/60;        % ìê·¹ ì œì‹œì‹œê°„[ê¸°ë³¸ê°’: 16.7 ms = 60 Hz ëª¨ë‹ˆí„° ê¸°ì¤€ 1í”„ë ˆì„]
+mask_t = 3/60;          % ê²€ì€ í™”ë©´ ì œì‹œì‹œê°„
+blank_t0 = 3/60;        % í‚¤ ì…ë ¥ê³¼ ìê·¹ ì œì‹œ ì‚¬ì´ ì‹œê°„ ê°„ê²©
 
-%% ÀÔ·ÂÃ¢ Á¦½Ã
-prompt = {'ID[¾Æ¹«¼ıÀÚ]: ', 'ÄÚµå: while[1]/°³¹ßÀÚ[2]', 'Áö¿¬¿ä¼Ò: ¾øÀ½[0]/Å°ÀÔ·ÂÁ÷ÈÄ[1]/¹İº¹¹®[2]'};
+%% ì…ë ¥ì°½ ì œì‹œ
+prompt = {'ID[ì•„ë¬´ìˆ«ì]: ', 'ì½”ë“œ: while[1]/ê°œë°œì[2]', 'ì§€ì—°ìš”ì†Œ: ì—†ìŒ[0]/í‚¤ì…ë ¥ì§í›„[1]/ë°˜ë³µë¬¸[2]'};
 dlgtitle = 'Input';
 dims = [1 50];
 definput = {'', '', ''};
@@ -35,7 +35,7 @@ whilewhen = str2double(answer{2, 1});
 delay = str2double(answer{3, 1});
 
 if delay == 2 && whilewhen == 2
-   error('°³¹ßÀÚ ÄÚµå & Áö¿¬¿ä¼Ò ¹İº¹¹® Á¶ÇÕÀº ºÒ°¡´ÉÇÕ´Ï´Ù.');
+   error('ê°œë°œì ì½”ë“œ & ì§€ì—°ìš”ì†Œ ë°˜ë³µë¬¸ ì¡°í•©ì€ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.');
 end
 
 if delay ~= 1
@@ -44,7 +44,7 @@ else
     blank_t = 0;
 end
 
-%% PTB3 ½ºÅ©¸° ¼³Á¤
+%% PTB3 ìŠ¤í¬ë¦° ì„¤ì •
 Screen('Preference','SkipSyncTests', issynctest);
 Screen('Preference','TextRenderer', 0);
 
@@ -60,17 +60,17 @@ key6 = KbName('6^'); key7 = KbName('7&'); key8 = KbName('8*'); key9 = KbName('9(
 % color -------------------------------------------------------------------
 black = [0 0 0]; white = [255 255 255];
 
-% À©µµ¿ì ¿­±â --------------------------------------------------------
+% ìœˆë„ìš° ì—´ê¸° --------------------------------------------------------
 [win, rect]=Screen('OpenWindow', screenNumber, white, [], [], [], [], 0);
-SetMouse(rect(3), rect(4));        % ¸¶¿ì½º Ä¿¼­ ¿À¸¥ÂÊ+¾Æ·¡ÂÊ ³¡À¸·Î ÀÌµ¿
+SetMouse(rect(3), rect(4));        % ë§ˆìš°ìŠ¤ ì»¤ì„œ ì˜¤ë¥¸ìª½+ì•„ë˜ìª½ ëìœ¼ë¡œ ì´ë™
 slack = Screen('GetFlipInterval', win)/2;
 
-%% ÇÁ·Î±×·¥ ÃøÁ¤ µ¥ÀÌÅÍÆÄÀÏ ¼³Á¤
+%% í”„ë¡œê·¸ë¨ ì¸¡ì • ë°ì´í„°íŒŒì¼ ì„¤ì •
 nowtime = fix(clock);
 nowdate_txt = sprintf('%4d%02d%02d_%02d%02d%02d', nowtime(1), nowtime(2), nowtime(3), nowtime(4), nowtime(5), nowtime(6));
 fileName0 = strcat('result/matlab', num2str(participant), '_', num2str(whilewhen), '_', num2str(delay), '_', num2str(round(target_t*1000)), '_', nowdate_txt, '.txt');
 
-%% ÀÚ±Ø ÀÌ¹ÌÁö ¼³Á¤
+%% ìê·¹ ì´ë¯¸ì§€ ì„¤ì •
 imgloc = round(CenterRectOnPointd([0 0 900 600], rect(3)/2, rect(4)/2));
 txtloc_y = imgloc(2)-50;
 
@@ -83,13 +83,13 @@ end
 mask = imread('stim/900x600_Black.jpg');
 mask_tex = Screen('MakeTexture', win, mask);
 
-%% ÀÚ±Ø Á¦½Ã ½ÃÀÛ
+%% ìê·¹ ì œì‹œ ì‹œì‘
 timestamp = [];
 for t = 1:nrepeat
-    if whilewhen == 1 % While¹®
+    if whilewhen == 1 % Whileë¬¸
         txt = strcat('ptb(while)', num2str(round(target_t*1000)), '_', num2str(t));
 
-        % Å° ÀÀ´ä ´ë±â
+        % í‚¤ ì‘ë‹µ ëŒ€ê¸°
         KbQueueCreate;
         KbQueueStart;
         while true
@@ -105,14 +105,14 @@ for t = 1:nrepeat
         KbQueueStop;
         KbQueueRelease;
 
-        % ºó È­¸é
-        blank_onset = GetSecs; % ºó È­¸é Á¦½Ã ½ÃÀÛ½ÃÁ¡
+        % ë¹ˆ í™”ë©´
+        blank_onset = GetSecs; % ë¹ˆ í™”ë©´ ì œì‹œ ì‹œì‘ì‹œì 
         while GetSecs - blank_onset < blank_t - slack
             Screen('Flip', win);
         end
 
-        % ÀÚ±Ø
-        target_onset = GetSecs; % ÀÚ±Ø Á¦½Ã ½ÃÀÛ½ÃÁ¡
+        % ìê·¹
+        target_onset = GetSecs; % ìê·¹ ì œì‹œ ì‹œì‘ì‹œì 
         while GetSecs - target_onset < target_t - slack
             if delay == 2
                 target = imread(targetName);
@@ -124,8 +124,8 @@ for t = 1:nrepeat
             Screen('Flip', win);
         end
 
-        % °ËÀº È­¸é
-        mask_onset = GetSecs; % ÀÚ±Ø Á¦½Ã Á¾·á½ÃÁ¡ = °ËÀº È­¸é ½ÃÀÛ½ÃÁ¡
+        % ê²€ì€ í™”ë©´
+        mask_onset = GetSecs; % ìê·¹ ì œì‹œ ì¢…ë£Œì‹œì  = ê²€ì€ í™”ë©´ ì‹œì‘ì‹œì 
         while GetSecs - mask_onset < mask_t - slack
             DrawFormattedText(win, txt, 'center', txtloc_y, black);
             Screen('DrawTexture', win, mask_tex, [], imgloc);
@@ -133,14 +133,14 @@ for t = 1:nrepeat
         end
         target_realtime = mask_onset - target_onset;
 
-        mask_offset = GetSecs; % °ËÀº È­¸é Á¾·á½ÃÁ¡
+        mask_offset = GetSecs; % ê²€ì€ í™”ë©´ ì¢…ë£Œì‹œì 
         mask_realtime = mask_offset - mask_onset;
         Screen('Flip',win);
 
-    elseif whilewhen == 2 % °³¹ßÀÚ ÄÚµå
+    elseif whilewhen == 2 % ê°œë°œì ì½”ë“œ
         txt = strcat('ptb(when)', num2str(round(target_t*1000)), '_', num2str(t));
 
-        % Å° ÀÀ´ä ´ë±â
+        % í‚¤ ì‘ë‹µ ëŒ€ê¸°
         KbQueueCreate;
         KbQueueStart;
         while true
@@ -156,31 +156,31 @@ for t = 1:nrepeat
         KbQueueStop;
         KbQueueRelease;
 
-        % ºó È­¸é
-        blank_onset = Screen('Flip', win); % ºó È­¸é Á¦½Ã ½ÃÀÛ½ÃÁ¡
+        % ë¹ˆ í™”ë©´
+        blank_onset = Screen('Flip', win); % ë¹ˆ í™”ë©´ ì œì‹œ ì‹œì‘ì‹œì 
 
-        % ÀÚ±Ø
+        % ìê·¹
         DrawFormattedText(win, txt, 'center', txtloc_y, black);
         if delay == 2
             target = imread(targetName);
             target_tex = Screen('MakeTexture', win, target);
         end
         Screen('DrawTexture', win, target_tex, [], imgloc);
-        target_onset = Screen('Flip', win, blank_onset + blank_t - slack); % ÀÚ±Ø Á¦½Ã ½ÃÀÛ½ÃÁ¡
+        target_onset = Screen('Flip', win, blank_onset + blank_t - slack); % ìê·¹ ì œì‹œ ì‹œì‘ì‹œì 
 
-        % °ËÀº È­¸é
+        % ê²€ì€ í™”ë©´
         DrawFormattedText(win, txt, 'center', txtloc_y, black);
         Screen('DrawTexture', win, mask_tex, [], imgloc);
-        mask_onset = Screen('Flip', win, target_onset + target_t - slack); % ÀÚ±Ø Á¦½Ã Á¾·á½ÃÁ¡ = °ËÀº È­¸é ½ÃÀÛ½ÃÁ¡
+        mask_onset = Screen('Flip', win, target_onset + target_t - slack); % ìê·¹ ì œì‹œ ì¢…ë£Œì‹œì  = ê²€ì€ í™”ë©´ ì‹œì‘ì‹œì 
         target_realtime = mask_onset - target_onset;
 
-        mask_offset = Screen('Flip', win, mask_onset + mask_t - slack); % °ËÀº È­¸é Á¾·á½ÃÁ¡
+        mask_offset = Screen('Flip', win, mask_onset + mask_t - slack); % ê²€ì€ í™”ë©´ ì¢…ë£Œì‹œì 
         mask_realtime = mask_offset - mask_onset;
         Screen('Flip',win);
     end
     timestamp = vertcat(timestamp, [participant t whilewhen delay target_t target_realtime mask_realtime]);
 end
 
-%% ÇÁ·Î±×·¥ ÃøÁ¤ µ¥ÀÌÅÍÆÄÀÏ ÀúÀå ÈÄ Á¾·á
+%% í”„ë¡œê·¸ë¨ ì¸¡ì • ë°ì´í„°íŒŒì¼ ì €ì¥ í›„ ì¢…ë£Œ
 writetable(table(timestamp), fileName0, 'Delimiter', '\t');
 Screen('Close', win);
